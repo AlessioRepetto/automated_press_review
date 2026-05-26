@@ -41,6 +41,7 @@ from scripts.config import (
     MISTRAL_MODEL,
     N_RUNS,
     TOP_N,
+    TZ_ROME,
 )
 
 # ----- NLP models -------------------------------------------------------------
@@ -246,7 +247,12 @@ def run_pipeline() -> PipelineOutput:
 
     Returns a `PipelineOutput` carrying every object the report module needs.
     """
-    generated_at = datetime.now()
+    # Timestamp the run started, ALWAYS in Italy's timezone.
+    # datetime.now() without a tz returns the system local time — which is
+    # UTC on the GitHub Actions runner, not Rome. The report is for Italian
+    # readers, so generated_at must be Rome time regardless of where the
+    # pipeline runs. TZ_ROME is the same zone already used for news dates.
+    generated_at = datetime.now(TZ_ROME)
     logger.info("Pipeline start: %s", generated_at.isoformat())
 
     # -- 4. Ingestion -----------------------------------------------------------
