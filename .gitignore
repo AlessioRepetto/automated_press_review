@@ -1,0 +1,29 @@
+# Secrets
+.env
+
+# Python
+.env
+__pycache__/
+artifacts/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Snapshots and generated artifacts
+estrazione_*.xlsx
+*.png
+top_news_grid.png
+community_*_grid.png
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+.vscode/

@@ -1,0 +1,106 @@
+source,section,url
+Ansa,Prima Pagina,https://www.ansa.it/sito/ansait_rss.xml
+Ansa,Politica,https://www.ansa.it/sito/notizie/politica/politica_rss.xml
+Ansa,News estere,https://www.ansa.it/sito/notizie/mondo/mondo_rss.xml
+Ansa,News Europa,https://www.ansa.it/europa/notizie/rss.xml
+Ansa,Europarlamento,https://www.ansa.it/europa/notizie/europarlamento/news/europarlamento_rss.xml
+Ansa,Sport,https://www.ansa.it/sito/notizie/sport/sport_rss.xml
+Ansa,Economia,https://www.ansa.it/sito/notizie/economia/economia_rss.xml
+Ansa,Cronaca,https://www.ansa.it/sito/notizie/cronaca/cronaca_rss.xml
+Ansa,Terra e Gusto,https://www.ansa.it/canale_terraegusto/notizie/terraegusto_rss.xml
+Rai,Ultima Ora,https://www.rainews.it/rss/ultimora
+Rai,Politica,https://www.rainews.it/rss/politica
+Rai,Ambiente,https://www.rainews.it/rss/ambiente
+Rai,Economia e Finanza,https://www.rainews.it/rss/economiaefinanza
+Rai,Scienza e Tecnologia,https://www.rainews.it/rss/scienzaetecnologia
+Rai,Viaggi e Turismo,https://www.rainews.it/rss/viaggieturismo
+Rai,Sport,https://www.rainews.it/rss/sport
+Rai,Cronaca,https://www.rainews.it/rss/cronaca
+Rai,Tempo Libero,https://www.rainews.it/rss/stilidivitaetempolibero
+Rai,Salute,https://www.rainews.it/rss/salute
+Rai,Arti e Spettacolo,https://www.rainews.it/rss/artiespettacolo
+Rai,Societa,https://www.rainews.it/rss/societa
+Rai,Esteri,https://www.rainews.it/rss/esteri
+Rai,Inchieste,https://www.rainews.it/rss/inchieste
+Rai,Spettacolo,https://www.rainews.it/rss/spettacolo
+Adnkronos,Prima Pagina,https://www.adnkronos.com/RSS_PrimaPagina.xml
+Adnkronos,Ultima Ora,https://www.adnkronos.com/RSS_Ultimora.xml
+Adnkronos,Politica,https://www.adnkronos.com/RSS_Politica.xml
+Adnkronos,Esteri,https://www.adnkronos.com/RSS_Esteri.xml
+Adnkronos,Cronaca,https://www.adnkronos.com/RSS_Cronaca.xml
+Adnkronos,Economia,https://www.adnkronos.com/RSS_Economia.xml
+Adnkronos,Finanza,https://www.adnkronos.com/RSS_Finanza.xml
+Adnkronos,Spettacolo,https://www.adnkronos.com/RSS_Spettacolo.xml
+Adnkronos,Cultura,https://www.adnkronos.com/RSS_Cultura.xml
+Adnkronos,Sport,https://www.adnkronos.com/RSS_Sport.xml
+Adnkronos,Sostenibilita,https://www.adnkronos.com/RSS_Sostenibilita.xml
+Adnkronos,Salute,https://www.adnkronos.com/RSS_Salute.xml
+Adnkronos,Lavoro,https://www.adnkronos.com/RSS_Labitalia.xml
+Repubblica,Homepage,https://www.repubblica.it/rss/homepage/rss2.0.xml
+Repubblica,Politica,https://www.repubblica.it/rss/politica/rss2.0.xml
+Repubblica,Esteri,https://www.repubblica.it/rss/esteri/rss2.0.xml
+Repubblica,Economia,https://www.repubblica.it/rss/economia/rss2.0.xml
+Repubblica,Cronaca,https://www.repubblica.it/rss/cronaca/rss2.0.xml
+Repubblica,Ambiente,https://www.repubblica.it/rss/ambiente/rss2.0.xml
+Repubblica,Solidarieta,https://www.repubblica.it/rss/solidarieta/rss2.0.xml
+Repubblica,Persone,https://www.repubblica.it/rss/persone/rss2.0.xml
+Repubblica,Salute,https://www.repubblica.it/rss/salute/rss2.0.xml
+Repubblica,Scuola e Universita,https://www.repubblica.it/rss/scuola_e_universita/rss2.0.xml
+Repubblica,Scienze,https://www.repubblica.it/rss/scienze/rss2.0.xml
+Repubblica,Tecnologia,https://www.repubblica.it/rss/tecnologia/rss2.0.xml
+Repubblica,Calcio,https://www.repubblica.it/rss/sport/calcio/rss2.0.xml
+Repubblica,Formula Uno,https://www.repubblica.it/rss/sport/formulauno/rss2.0.xml
+Repubblica,MotoGP,https://www.repubblica.it/rss/sport/motogp/rss2.0.xml
+Repubblica,Tennis,https://www.repubblica.it/rss/sport/tennis/rss2.0.xml
+Repubblica,Basket,https://www.repubblica.it/rss/sport/basket/rss2.0.xml
+Repubblica,Rugby,https://www.repubblica.it/rss/sport/rugby/rss2.0.xml
+Repubblica,Ciclismo,https://www.repubblica.it/rss/sport/ciclismo/rss2.0.xml
+Repubblica,Golf,https://www.repubblica.it/rss/sport/golf/rss2.0.xml
+Repubblica,Altri Sport,https://www.repubblica.it/rss/sport/vari/rss2.0.xml
+Repubblica,Spettacoli e Cultura,https://www.repubblica.it/rss/spettacoli_e_cultura/rss2.0.xml
+AGI,Cronaca,https://www.agi.it/cronaca/rss
+AGI,Economia,https://www.agi.it/economia/rss
+AGI,Politica,https://www.agi.it/politica/rss
+AGI,Estero,https://www.agi.it/estero/rss
+AGI,Cultura,https://www.agi.it/cultura/rss
+AGI,Sport,https://www.agi.it/sport/rss
+AGI,Innovazione,https://www.agi.it/innovazione/rss
+AGI,Lifestyle,https://www.agi.it/lifestyle/rss
+Corriere della Sera,Home,https://xml2.corriereobjects.it/feed-hp/homepage-restyle-2025.xml
+Corriere della Sera,Cronaca,https://www.corriere.it/dynamic-feed/rss/section/Cronache.xml
+Corriere della Sera,Politica,https://www.corriere.it/dynamic-feed/rss/section/Politica.xml
+Corriere della Sera,Esteri,https://www.corriere.it/dynamic-feed/rss/section/Esteri.xml
+Corriere della Sera,Economia,https://www.corriere.it/dynamic-feed/rss/section/Economia.xml
+Corriere della Sera,Cultura,https://xml2.corriereobjects.it/rss/cultura.xml
+Corriere della Sera,Spettacoli,https://www.corriere.it/dynamic-feed/rss/section/Spettacoli.xml
+Corriere della Sera,Cinema e Tv,https://www.corriere.it/dynamic-feed/rss/section/Spettacoli-Cinema.xml
+Corriere della Sera,Scienze,https://www.corriere.it/dynamic-feed/rss/section/Scienze.xml
+Corriere della Sera,Sport,https://www.corriere.it/dynamic-feed/rss/section/Sport.xml
+Corriere della Sera,Motori,https://xml2.corriereobjects.it/rss/motori.xml
+Corriere della Sera,Animali,https://www.corriere.it/dynamic-feed/rss/section/Animali.xml
+Il Sole 24 Ore,Italia,https://www.ilsole24ore.com/rss/italia.xml
+Il Sole 24 Ore,Mondo,https://www.ilsole24ore.com/rss/mondo.xml
+Il Sole 24 Ore,Economia,https://www.ilsole24ore.com/rss/economia.xml
+Il Sole 24 Ore,Finanza,https://www.ilsole24ore.com/rss/finanza.xml
+Il Sole 24 Ore,Cultura,https://www.ilsole24ore.com/rss/cultura.xml
+Il Sole 24 Ore,Cibo,https://www.ilsole24ore.com/rss/food.xml
+Il Sole 24 Ore,Moda,https://www.ilsole24ore.com/rss/moda.xml
+Il Sole 24 Ore,Motori,https://www.ilsole24ore.com/rss/motori.xml
+Il Sole 24 Ore,Salute,https://www.ilsole24ore.com/rss/salute.xml
+Il Sole 24 Ore,Scuola,https://www.ilsole24ore.com/rss/scuola.xml
+Il Sole 24 Ore,Sport,https://www.ilsole24ore.com/rss/sport24.xml
+Il Sole 24 Ore,Tecnologia,https://www.ilsole24ore.com/rss/tecnologia.xml
+Il Sole 24 Ore,Viaggi,https://www.ilsole24ore.com/rss/viaggi.xml
+Il Giornale,Home,https://www.ilgiornale.it/feed.xml
+Il Giornale,News,https://www.ilgiornale.it/taxonomy/term/40819/feed
+Il Giornale,Politica,https://www.ilgiornale.it/taxonomy/term/40821/feed
+Il Giornale,Cronaca,https://www.ilgiornale.it/taxonomy/term/40820/feed
+Il Giornale,Mondo,https://www.ilgiornale.it/taxonomy/term/40820/feed
+Il Giornale,Economia,https://www.ilgiornale.it/taxonomy/term/40822/feed
+Il Giornale,Sport,https://www.ilgiornale.it/taxonomy/term/40826/feed
+Il Giornale,Motori,https://www.ilgiornale.it/taxonomy/term/46964/feed
+Internazionale,Home,https://www.internazionale.it/sitemaps/rss.xml
+Internazionale,Italia,https://www.internazionale.it/sitemaps/rss_italia.xml
+Internazionale,Opinioni,https://www.internazionale.it/sitemaps/rss_opinioni.xml
+Internazionale,Reportage,https://www.internazionale.it/sitemaps/rss_reportage.xml
+Il Fatto Quotidiano,Home,https://www.ilfattoquotidiano.it/feed/

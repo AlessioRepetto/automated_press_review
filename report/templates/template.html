@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }} — {{ generated_at_display }}</title>
+  <style>{{ inline_css | safe }}</style>
+</head>
+<body>
+<div class="page">
+
+  {# ============================================================
+     HEADER
+     ============================================================ #}
+  <header class="report-header">
+    <h1 class="report-title">{{ title }}</h1>
+    <p class="report-subtitle">{{ subtitle }}</p>
+    <p class="report-stamp">{{ generated_at_display }}</p>
+  </header>
+
+  {# ============================================================
+     1. WORDCLOUD
+     ============================================================ #}
+  {% if wordcloud.image_data_uri %}
+  <section class="section-wordcloud">
+    <figure class="figure">
+      <img src="{{ wordcloud.image_data_uri }}" alt="Wordcloud dei concetti più rilevanti">
+      <figcaption>{{ labels.caption_wordcloud }}</figcaption>
+    </figure>
+  </section>
+  {% endif %}
+
+  {# ============================================================
+     2. DAILY RECAP — "Le ultime 24 ore in breve"
+     Always visible: this is the "casual reader" view.
+     ============================================================ #}
+  <section class="section-recap">
+    <h2 class="section-title">{{ labels.section_recap }}</h2>
+    {% if recap_html %}
+      <div class="recap-box">
+        {{ recap_html | safe }}
+      </div>
+    {% else %}
+      <p class="note-muted">{{ labels.no_data }}</p>
+    {% endif %}
+  </section>
+
+  {# ============================================================
+     COLLAPSIBLE DEEP-DIVE
+     Everything from the legend down to the coverage section is
+     wrapped in a native <details> element: closed by default for
+     the casual reader, expandable in-place with no JS / no reload.
+     Forced open in print (see @media print in the stylesheet).
+     ============================================================ #}
+  <details class="deep-dive">
+    <summary class="deep-dive-summary">
+      <span class="deep-dive-label">{{ labels.details_open_label }}</span>
+      <span class="deep-dive-hint">{{ labels.details_hint }}</span>
+      <span class="deep-dive-chevron" aria-hidden="true"></span>
+    </summary>
+
+    <div class="deep-dive-content">
+
+      {# ---- TABLE OF CONTENTS — "Cosa troverai qui sotto" -------- #}
+      {% if deep_dive_intro %}
+      <section class="section-toc">
+        <h2 class="toc-title">{{ deep_dive_intro.title }}</h2>
+        <p class="toc-lead">{{ deep_dive_intro.lead }}</p>
+        <ol class="toc-list">
+          {% for item in deep_dive_intro.sections %}
+            <li>
+              <span class="toc-item-title">{{ item.title }}</span>
+              <span class="toc-item-desc">{{ item.description }}</span>
+            </li>
+          {% endfor %}
+        </ol>
+      </section>
+      {% endif %}
+
+      {# ---- LEGEND — "Cosa raccontano i colori" ------------------ #}
+      {% if legend_roles %}
+      <section class="section-legend">
+        <div class="legend-box">
+          <h2 class="legend-title">{{ labels.section_legend_title }}</h2>
+          <p class="legend-intro">{{ labels.section_legend_intro | safe }}</p>
+          <dl class="legend-list">
+            {% for role in legend_roles %}
+              <div class="legend-item">
+                <dt>
+                  <span class="legend-swatch" style="background: {{ role.color }};"></span>
+                  {{ role.label }}
+                </dt>
+                <dd>{{ role.description }}</dd>
+              </div>
+            {% endfor %}
+          </dl>
+        </div>
+      </section>
+      {% endif %}
+
+      {# ---- TOP NEWS — "Alcune notizie rilevanti" ---------------- #}
+      {# News are now inline HTML (role-coloured spans), not an image. #}
+      <section class="section-top-news">
+        <h2 class="section-title">{{ labels.section_top_news }}</h2>
+        {% if top_news.html %}
+          {{ top_news.html | safe }}
+        {% else %}
+          <p class="note-muted">{{ labels.no_data }}</p>
+        {% endif %}
+      </section>
+
+      {# ---- COMMUNITIES — "I principali temi portanti" ----------- #}
+      <section class="section-communities">
+        <h2 class="section-title">{{ labels.section_communities }}</h2>
+        {% if communities %}
+          {% for c in communities %}
+            <div class="community-block">
+              <h3>{{ c.title }}</h3>
+              {% if c.html %}
+                {{ c.html | safe }}
+              {% else %}
+                <p class="note-muted">{{ labels.no_data }}</p>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+          <p class="note-muted">{{ labels.no_data }}</p>
+        {% endif %}
+      </section>
+
+      {# ---- COVERAGE & FRAMING — "Copertura..." ------------------ #}
+      <section class="section-coverage">
+        <h2 class="section-title">{{ labels.section_coverage }}</h2>
+        {% if coverage %}
+          {% for cl in coverage %}
+            <div class="cluster-block">
+              <h3 class="subsection-title">{{ cl.title }}</h3>
+              {% if cl.description %}
+                <p class="cluster-description">{{ cl.description }}</p>
+              {% endif %}
+
+              {% if cl.bar_data_uri %}
+                <figure class="figure">
+                  <img src="{{ cl.bar_data_uri }}" alt="Copertura per testata — {{ cl.title }}">
+                </figure>
+              {% endif %}
+
+              {% if cl.framing_available %}
+                <h4 class="subsection-title">{{ labels.subsection_distinct_terms }}</h4>
+                <table class="framing-table">
+                  <thead>
+                    <tr>
+                      {% for h in cl.framing_table.headers %}
+                        <th>{{ h }}</th>
+                      {% endfor %}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for row in cl.framing_table.rows %}
+                      <tr>
+                        {% for cell in row %}
+                          <td>{{ cell }}</td>
+                        {% endfor %}
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              {% else %}
+                <p class="note-muted">{{ labels.framing_unavailable }}</p>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+          <p class="note-muted">{{ labels.no_data }}</p>
+        {% endif %}
+      </section>
+
+    </div>{# /.deep-dive-content #}
+  </details>
+
+  {# ============================================================
+     FOOTER — always visible, outside the collapsible block
+     ============================================================ #}
+  <footer class="report-footer">
+    <div>
+      {{ labels.footer_generated }} {{ generated_at_display }}
+      &middot; {{ n_articles }} {{ labels.footer_articles }}
+      &middot; {{ n_sources }} {{ labels.footer_sources }}
+    </div>
+    {% if sources %}
+      <div class="sources-list">
+        {{ sources | join(' &middot; ') | safe }}
+      </div>
+    {% endif %}
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+# Analisi News library package.
