@@ -500,6 +500,18 @@ Regole NON NEGOZIABILI:
   "oggi e' successo", "questa mattina", "in giornata".
 - NON elencare le notizie una per una: identifica i principali temi portanti
   della giornata e raccontali in modo continuo.
+- ORDINE EDITORIALE OBBLIGATORIO. Segui la gerarchia classica di un
+  notiziario:
+    * APRI con politica, economia, cronaca, esteri, scienza, salute,
+      tecnologia, ambiente, lavoro e simili (le cosiddette "notizie hard")
+    * METTI ALLA FINE, dopo tutto il resto, le notizie di sport (calcio,
+      tennis, ciclismo, motori, ecc.) e di spettacolo / cultura /
+      intrattenimento (cinema, musica, TV, festival, premi, gossip,
+      eventi mondani)
+  Anche quando uno sport o uno spettacolo sembra "l'evento del giorno" non
+  va mai in apertura: il riassunto deve sempre cominciare dalle notizie
+  hard e chiudere con le soft. Se nelle notizie fornite ci sono SOLO temi
+  sportivi o di spettacolo, allora puoi trattarli normalmente.
 - Mantieni un tono sobrio, chiaro e accessibile a un cittadino medio.
   Niente enfasi giornalistica artificiale.
 - Lunghezza: circa 150-220 parole.
