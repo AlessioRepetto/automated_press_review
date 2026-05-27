@@ -23,9 +23,9 @@ on:
   # Twice a day. Cron is in UTC. 06:00 and 18:00 UTC correspond to roughly
   # 07:00/08:00 and 19:00/20:00 Italian time, depending on daylight saving.
   schedule:
-    - cron: "0 4 * * *"
-    - cron: "0 9 * * *"
-    - cron: "0 16 * * *"
+    - cron: "27 4 * * *"
+    - cron: "23 9 * * *"
+    - cron: "19 16 * * *"
   # Lets you trigger a run by hand from the Actions tab (useful for testing).
   workflow_dispatch:
 
