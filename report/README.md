@@ -1,14 +1,13 @@
-# Report module — Analisi News
+# Report module - Automated Press Review
 
-Modulo standalone che genera l'HTML giornaliero **"La Parola Data"** a partire
-dalla pipeline esistente.
+Standalone module that generates the HTML page **"La Parola Data"**.
 
-## Struttura
+## Structure
 
 ```
 report/
 ├── run_report.py          # entry point CLI (standalone)
-├── config.py              # palette UI, label italiani, font fallback
+├── config.py              # UI palette, italian labes, font fallback
 ├── data_collector.py      # PipelineOutput -> report_data dict + JSON dump
 ├── image_builder.py       # PNG -> base64 data URI
 ├── html_renderer.py       # Jinja2 render
@@ -20,13 +19,13 @@ scripts/
 └── pipeline.py            # NUOVO file additivo: run_pipeline()
 ```
 
-Il modulo è **autocontenuto**: non modifica niente di esistente in `scripts/`.
-L'unica aggiunta è `scripts/pipeline.py`, che incapsula in una funzione la
-logica del notebook senza alterarne il comportamento.
+The module is **self-contained**: it uses what was already in `scripts/` for the notebook version.
+The only addition is `scripts/pipeline.py`, which incapsulates in a function the notebook's
+logic, without changing its behaviour.
 
-## Esecuzione
+## Execution
 
-Dalla project root:
+From the project root:
 
 ```bash
 python -m report.run_report
@@ -35,61 +34,54 @@ python -m report.run_report
 Output (in `artifacts/`):
 
 ```
-la_parola_data_YYYYMMDD_HHMM.html      # HTML singolo file autoportante
-la_parola_data_YYYYMMDD_HHMM.json      # dump report_data per debug/replay
+la_parola_data_YYYYMMDD_HHMM.html      # Single HTML file
+la_parola_data_YYYYMMDD_HHMM.json      # dump report_data for debug/replay
 ```
 
-### Opzioni
+### Options
 
 ```bash
 python -m report.run_report --output-dir /altro/path
 python -m report.run_report -v          # DEBUG logging
 ```
 
-## Stampa PDF
+## PDF Print
 
-Il template include `@media print` con `@page { size: A4; margin: 2cm; }` e
-`page-break-before` sulle sezioni principali. Dal browser → **Stampa → Salva
-come PDF** si ottiene un PDF impaginato professionalmente, una sezione per
+The template includes `@media print` with `@page { size: A4; margin: 2cm; }` and
+`page-break-before` in the main sections. From the browser → **Print → Save
+as PDF** to obtain a professionally paginated PDF, a section for each page
 pagina.
 
-## Caratteristiche del rendering
+## Rendering features
 
-- **HTML autoportante**: tutte le immagini sono embeddate in base64
-  (nessun PNG su disco, nessuna dipendenza esterna). L'HTML è
-  spostabile come singolo file.
-- **CSS inline** nel `<head>`: nessun file `.css` da accompagnare.
-- **Font fallback automatico**: la pipeline usa Arial Windows
-  hardcoded. Il modulo monkey-patcha `PIL.ImageFont.truetype` con
-  fallback automatico a DejaVu / Liberation / Helvetica per
-  funzionare anche su Linux/Mac. Il patch è no-op su Windows con
-  Arial presente.
-- **JSON gemello**: stesso contenuto del dict che alimenta il
-  template. Replay di rendering possibile senza ri-eseguire pipeline
-  (utile per iterare su template/CSS senza pagare il costo NLP).
+- **Standalone HTML**: all images are base64 embedded
+  (no PNG on disk, no external dependencies). The HTML is movable
+  as a single file.
+- **CSS inline** in `<head>`: no file `.css` to add.
+- **JSON twin**: same content of the dict that feeds the
+  template. Replay possible without re-executing the pipeline
+  (useful for iterations on template/CSS without paying a price in tokens expended).
 
 ## Palette
 
-Decisioni cromatiche (configurabili in `config.py`):
+Chromatic decisions (configurable in `config.py`):
 
-| Variabile | Valore | Uso |
+| Variable | Value | Use |
 |---|---|---|
-| `COLOR_HEADING` | `#355C7D` | tutti i titoli (H1/H2/H3) |
-| `COLOR_PRIMARY` | `#2E6C80` | accenti, righelli, intestazioni meta |
-| `COLOR_SECONDARY` | `#6A9A86` | accenti secondari (bordo recap, regola sotto-sezioni) |
-| `COLOR_TEXT` | `#000000` | testo body |
+| `COLOR_HEADING` | `#355C7D` | all titles (H1/H2/H3) |
+| `COLOR_PRIMARY` | `#2E6C80` | accents, rulers, meta headers |
+| `COLOR_SECONDARY` | `#6A9A86` | secondary accents (border recap, sub-section rules) |
+| `COLOR_TEXT` | `#000000` | text body |
 
-La palette dei grafici (`viz_palette.py`) **non** è toccata.
+## Language
 
-## Lingua
+All static texts are in italian (section titles, labels, footer) and
+configurables with the dict `LABELS` in `config.py`.
 
-Tutti i testi statici sono in italiano (titoli sezioni, label, footer) e
-configurabili nel dict `LABELS` in `config.py`.
+## Extensibility
 
-## Estensibilità
-
-- **Cambiare il sottotitolo**: `config.SUBTITLE_REPORT`
-- **Cambiare label / parola "Generato il"**: `config.LABELS`
-- **Cambiare formato data nel filename**: `config.STAMP_FORMAT`
-- **Aggiungere una sezione**: nuova chiave in `build_report_data`,
-  nuovo blocco `{% if %}` nel template, nuovo blocco CSS opzionale.
+- **Changing the sub-title**: `config.SUBTITLE_REPORT`
+- **Changing label / word "Generato il"**: `config.LABELS`
+- **Changing date format in filename**: `config.STAMP_FORMAT`
+- **Adding a section**: new key in `build_report_data`,
+  new block `{% if %}` in the template, new block in the CSS optional.
