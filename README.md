@@ -7,9 +7,11 @@
  
 ## Overview
  
-**Automated Press Review** is an end-to-end NLP and graph pipeline that turns the daily flow of Italian press into a single, structured intelligence report. Every day, across several time slots, it ingests the public RSS feeds of the main national outlets (AGI, ANSA, Adnkronos, Repubblica, Rai), clusters the news by topic, builds a co-occurrence graph of the key concepts, detects the thematic communities of the day, and lets a large language model narrate the result in publication-ready Italian.
+Every day the main Italian outlets publish hundreds of articles on overlapping events. Following all of them across sources is impractical for a reader, and each outlet frames the same facts in its own way. **Automated Press Review** addresses both problems at once: it uses advanced data science to find, inside that mass of coverage, the information that actually matters, and then retells it in a form that is shorter and easier to consume — and more impartial than any single source taken on its own.
  
-The output is not a dashboard of raw metrics but an editorial artifact: a daily wordcloud, a "last 24 hours in brief" recap, a set of highlighted articles, the main thematic communities, and a coverage-and-framing view across outlets. The whole process runs unattended in the cloud and republishes an updated HTML page two to three times a day.
+The mechanism is what makes the impartiality concrete. Because the narration is anchored to what *multiple* sources reported about a story, rather than to one outlet's editorial line, the resulting digest tends to smooth out individual framing and surface the shared core of each event. The system reads the public RSS feeds of ten national outlets (AGI, Adnkronos, ANSA, Corriere della Sera, Il Fatto Quotidiano, Il Giornale, Il Sole 24 Ore, Internazionale, Rai, Repubblica) groups the news semantically, builds a co-occurrence graph of the key concepts, detects the day's thematic communities, and lets a large language model narrate the result in publication-ready Italian.
+ 
+Technically, it is an end-to-end NLP and graph pipeline that turns the daily flow of Italian press into a single, structured intelligence report. The output is an editorial artifact: a daily wordcloud, a "last 24 hours in brief" recap, a set of highlighted articles, the main thematic communities, and a coverage-and-framing view across outlets. The whole process runs unattended in the cloud and republishes an updated HTML page - the public product, **La Parola Data** - three times a day.
  
 The project is deliberately designed around two ideas that recur throughout: **distribution-aware logic** (thresholds derived from the current day's corpus rather than fixed constants, so the system stays robust when the news volume or thematic spread changes) and a **cloud-first execution model** (the report can be rendered fully in memory and published without touching disk, which is what makes scheduled execution on ephemeral runners reliable).
  
@@ -17,6 +19,8 @@ The project is deliberately designed around two ideas that recur throughout: **d
  
 ## Objectives
  
+- Surface, from a high-volume multi-source news stream, the information that genuinely matters
+- Retell it concisely and more impartially than any single outlet, by anchoring narration to what multiple sources actually report
 - Ingest and normalise heterogeneous RSS feeds into a clean, deduplicated daily corpus
 - Cluster news semantically without a fixed number of topics, using density-based clustering
 - Extract interpretable key concepts per cluster and connect them in a co-occurrence graph
@@ -95,6 +99,19 @@ Louvain detects the thematic communities; only distinctive roles (everything exc
  
 ---
  
+## The daily report
+ 
+A reader of La Parola Data gets a compact, source-agnostic reading of the day:
+ 
+- **Daily wordcloud** of the day's leading concepts
+- **"Last 24 hours in brief"** — a sober recap that orders hard news first and soft news (sport, culture, entertainment) last
+- **Highlighted articles** — the most representative pieces of the day
+- **Main thematic communities** — the day's macro-topics, each with an LLM-written title and its representative articles
+- **Coverage and framing** — how different outlets cover the same clusters, and with which words
+The development notebook goes further than the published page. Beyond the sections above, it includes **ego-graph views of individual concepts** and a **per-concept narration** that attributes a meaning and a structural role to a single word within the day's discourse. These exploratory analyses are intentionally left out of the public report to keep it focused and quick to read; they remain available in the notebook for deeper inspection.
+ 
+---
+ 
 ## Architecture highlights
  
 A few design decisions that go beyond "make it run":
@@ -114,31 +131,56 @@ automated_press_review/
 |-- .github/workflows/
 |   `-- daily-report.yml         # scheduled cloud execution (cron + manual dispatch)
 |
-|-- scripts/                     # pipeline library (NLP / graph / narration)
-|   |-- config.py                # env loading and pipeline constants
-|   |-- ingestion.py             # RSS download and parsing
-|   |-- pipeline.py              # end-to-end orchestration, single entry point
-|   |-- cluster_merge.py         # conservative pre-merge of duplicate clusters
-|   |-- communities.py           # Louvain + heterogeneity + selection levers
-|   |-- llm_narration.py         # all prompts toward Mistral
-|   `-- viz_*.py                 # graphical rendering for the report
+|-- notebooks/
+|   `-- Analisi_news.ipynb       # development orchestration + extra exploratory views
 |
-|-- report/                      # everything that builds the public HTML site
+|-- scripts/                     # pipeline library (NLP / graph / narration / viz)
+|   |-- config.py                # env loading and pipeline constants
+|   |-- models.py                # spaCy / SentenceTransformer / NLTK loaders
+|   |-- ingestion.py             # RSS download and parsing
+|   |-- preprocessing.py         # text preprocessing and NER helper
+|   |-- keyword_extraction.py    # custom KeyBERT with MMR
+|   |-- clustering.py            # UMAP + HDBSCAN + cluster representation
+|   |-- cluster_merge.py         # conservative pre-merge of duplicate clusters
+|   |-- lemmatization.py         # lemma maps and co-occurrence normalisation
+|   |-- graph_builder.py         # co-occurrence matrix and graph
+|   |-- graph_metrics.py         # node-level structural metrics
+|   |-- fuzzy_classifier.py      # fuzzy node-role classification
+|   |-- ranking.py               # relevance score, ego profile, combined score
+|   |-- communities.py           # Louvain detection and community analysis
+|   |-- cluster_ranking.py       # top-cluster selection and framing
+|   |-- recap.py                 # daily-recap article selection
+|   |-- llm_narration.py         # Mistral-anchored narration
+|   |-- pipeline.py              # end-to-end orchestration, single entry point
+|   |-- viz_palette.py           # shared colour palettes and visual constants
+|   |-- viz_wordcloud.py         # daily wordcloud
+|   |-- viz_news_render.py       # highlighted-news image rendering
+|   |-- viz_ego_graph.py         # ego-graph plotting (notebook-only view)
+|   |-- viz_communities.py       # community graph / wordcloud rendering
+|   `-- viz_framing.py           # framing tables and coverage bars
+|
+|-- report/                      # builds and publishes the public HTML site
 |   |-- config.py                # palette, labels, report paths
 |   |-- run_report.py            # entry point (pipeline + render + publish)
 |   |-- data_collector.py        # PipelineOutput -> report_data dict
 |   |-- html_renderer.py         # render_html_string (memory) + render_html (disk)
 |   |-- image_builder.py         # inline base64 PNGs for the report
 |   |-- github_publisher.py      # publishes the HTML to the site repo
-|   `-- templates/
-|       |-- template.html
-|       `-- style.css
+|   |-- templates/
+|   |   |-- template.html
+|   |   `-- style.css
+|   `-- README.md                # report-layer notes
 |
-|-- sources/news_feeds.csv       # RSS feed definitions (source, section, url)
+|-- sources/
+|   `-- news_feeds.csv           # RSS feed definitions (source, section, url)
+|
+|-- .gitignore
 |-- requirements.txt             # local environment (CUDA torch)
 |-- requirements-cloud.txt       # cloud environment (CPU torch)
-`-- .env                         # local only, NOT committed
+`-- README.md
 ```
+ 
+> A local `.env` (Mistral key, publishing token, paths, timezone) is read by `scripts/config.py`; it is gitignored and never committed.
  
 ---
  
@@ -167,16 +209,13 @@ automated_press_review/
    ```
    python -m spacy download it_core_news_lg
    ```
-3. Copy `.env.example` to `.env` and fill in the values (Mistral key, publishing token, paths, timezone):
-   ```
-   cp .env.example .env
-   ```
+3. Create a local `.env` with the required values (Mistral key, publishing token, paths, timezone). It is read by `scripts/config.py` and is gitignored.
 4. Run the pipeline and publish the report:
    ```
    python -m report.run_report --verbose
    ```
    Add `--save-local` to also write the HTML and JSON to disk (default is publish-only, the cloud-first behaviour).
-For development and inspection, `notebooks/Analisi_news.ipynb` chains the same stages by importing from `scripts/`; no algorithm is defined in the notebook itself.
+For development and inspection, `notebooks/Analisi_news.ipynb` chains the same stages by importing from `scripts/`; no algorithm is defined in the notebook itself. The notebook also produces the ego-graph and single-concept views that are not part of the published report.
  
 ---
  
@@ -186,7 +225,7 @@ Production runs on **GitHub Actions** (`ubuntu-latest`, CPU only, Python 3.13), 
  
 Sensitive values (`MISTRAL_API_KEY`, the publishing token) are injected as GitHub Actions Secrets; non-sensitive configuration lives in the workflow `env:` block.
  
-**Containerized fallback.** If an upstream feed ever refused cloud-runner requests outright -- a persistent block that no retry or browser-header workaround could defeat -- the runner is portable to a containerized batch job (build the root `Dockerfile`, deploy as a Google Cloud Run Job, trigger with Cloud Scheduler). This is a documented contingency, not the default deployment; nothing observed so far points to it being necessary.
+**Containerized fallback.** If an upstream feed ever refused cloud-runner requests outright -- a persistent block that no retry or browser-header workaround could defeat -- the pipeline is portable to a containerized batch job (for example a Google Cloud Run Job triggered by Cloud Scheduler). This is a documented contingency, not the default deployment; nothing observed so far points to it being necessary.
  
 ---
  
@@ -198,6 +237,7 @@ Sensitive values (`MISTRAL_API_KEY`, the publishing token) are injected as GitHu
 - Graph and network analysis (co-occurrence graphs, structural roles, Louvain communities)
 - Fuzzy, distribution-aware classification
 - LLM integration and prompt design for controlled editorial output
+- Bias-aware, multi-source aggregation and editorial synthesis
 - Cloud-first, stateless system design and scheduled deployment (GitHub Actions, GitHub Pages)
 - Production engineering: retry logic, timezone correctness, in-memory rendering, secret management
 ---
