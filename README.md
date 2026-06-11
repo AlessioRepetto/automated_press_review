@@ -1,6 +1,6 @@
 # Automated Press Review - Italian News Intelligence Pipeline
 
-![La Parola Data Logo](images/la parola data logo.jpg)
+![La Parola Data Logo](images/la_parola_data_logo.jpg)
  
 > Public product: **La Parola Data** - a daily, automatically generated reading of the Italian news cycle, published to GitHub Pages.
 > Live page: https://alessiorepetto.github.io/la_parola_data/
