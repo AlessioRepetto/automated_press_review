@@ -116,7 +116,7 @@ The pipeline is a single linear flow, orchestrated by `scripts/pipeline.py::run_
  
 ### Ingestion
  
-Feeds are downloaded, deduplicated and stripped of HTML (BeautifulSoup). Requests carry realistic browser headers and retry with backoff on transient failures (`403`/`5xx`/network), but never retry on `404`/`410`, where the resource is gone for good. This handles the occasional `403` some outlets return to cloud-runner requests: the rejections are intermittent rather than IP-persistent, so a later attempt typically succeeds.
+Feeds are downloaded, deduplicated and stripped of HTML (BeautifulSoup). Requests carry realistic browser headers and retry with backoff on transient failures (`403`/`5xx`/network), but never retry on `404`/`410`, where the resource is gone for good. This handles the occasional `403` some sources return to cloud-runner requests: the rejections are intermittent rather than IP-persistent, so a later attempt typically succeeds.
  
 ### Semantic clustering
  
@@ -150,7 +150,7 @@ A reader of La Parola Data gets a compact, source-agnostic reading of the day:
 - **"Last 24 hours in brief"** — a sober recap that orders hard news first and soft news (sport, culture, entertainment) last
 - **Highlighted articles** — the most representative pieces of the day
 - **Main thematic communities** — the day's macro-topics, each with an LLM-written title and its representative articles
-- **Coverage and framing** — how different outlets cover the same clusters, and with which words
+- **Coverage and framing** — how different sources cover the same clusters, and with which words
 
 The development notebook goes further than the published page. Beyond the sections above, it includes **ego-graph views of individual concepts** and a **per-concept narration** that attributes a meaning and a structural role to a single word within the day's discourse. These exploratory analyses are intentionally left out of the public report to keep it focused and quick to read; they remain available in the notebook for deeper inspection.
  
