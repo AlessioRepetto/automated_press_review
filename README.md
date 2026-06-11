@@ -1,19 +1,60 @@
 # Automated Press Review - Italian News Intelligence Pipeline
  
-> Public product: **La Parola Data** — a daily, automatically generated reading of the Italian news cycle, published to GitHub Pages.
+> Public product: **La Parola Data** - a daily, automatically generated reading of the Italian news cycle, published to GitHub Pages.
 > Live page: https://alessiorepetto.github.io/la_parola_data/
  
 ---
  
+## Why this project matters
+
+In a digital information environment shaped by volume, speed, repetition, and editorial framing, understanding the news is not only a matter of access to information. It is also a matter of structure, comparison, and critical reading.
+
+Every day, the various news sources publish hundreds of articles on overlapping events. Each source selects its own priorities, vocabulary, emphasis, and narrative angle. Reading a single source can therefore provide only a partial view, while following all available sources manually is unrealistic for an individual reader.
+
+This project was created to explore whether data science and artificial intelligence can support a more reflective way of reading the news.
+
+The goal is not to replace journalism, nor to claim neutrality through automation. The project starts from the assumption that every representation of the news is naturally partial, and its purpose is to make this partiality easier to observe by analysing multiple sources together, identifying recurring themes, detecting connections between concepts, and reducing the dependence on the framing of any single outlet.
+
+From this perspective, the project has both a technical and an ethical motivation: using automation not to accelerate passive consumption of information, but to support critical reading, comparison, and awareness.
+
+The final output, **La Parola Data**, is an automatically generated press review that attempts to summarise the daily Italian news cycle by relying on a structured analytical pipeline before any generative narration is produced.
+ 
+---
+ 
 ## Overview
+
+**Automated Press Review** is an end-to-end NLP, graph analysis, and LLM pipeline that transforms the daily flow of Italian online news into a structured and automatically published press review.
+
+The system reads the public RSS feeds of ten national outlets - AGI, Adnkronos, ANSA, Corriere della Sera, Il Fatto Quotidiano, Il Giornale, Il Sole 24 Ore, Internazionale, Rai, and Repubblica - and processes them as a single daily corpus rather than as a set of isolated articles.
+
+The pipeline cleans and deduplicates the collected articles, groups them semantically, extracts relevant concepts, builds a co-occurrence graph, detects the day's thematic communities, and uses a large language model to narrate the result in publication-ready Italian.
+
+The output is an editorial artifact: a daily wordcloud, a "last 24 hours in brief" recap, a set of highlighted articles, the main thematic communities, and a coverage-and-framing view across outlets. The whole process runs unattended in the cloud and republishes an updated HTML page - the public product, **La Parola Data** - three times a day.
+
+The project is not designed as a simple RSS aggregator. Its purpose is to analyse the structure of the news cycle: which topics dominate the day, which concepts connect different stories, which articles are representative of broader themes, and how recurring patterns emerge across multiple sources.
  
-Every day the main Italian outlets publish hundreds of articles on overlapping events. Following all of them across sources is impractical for a reader, and each outlet frames the same facts in its own way. **Automated Press Review** addresses both problems at once: it uses advanced data science to find, inside that mass of coverage, the information that actually matters, and then retells it in a form that is shorter and easier to consume — and more impartial than any single source taken on its own.
+---
  
-The mechanism is what makes the impartiality concrete. Because the narration is anchored to what *multiple* sources reported about a story, rather than to one outlet's editorial line, the resulting digest tends to smooth out individual framing and surface the shared core of each event. The system reads the public RSS feeds of ten national outlets (AGI, Adnkronos, ANSA, Corriere della Sera, Il Fatto Quotidiano, Il Giornale, Il Sole 24 Ore, Internazionale, Rai, Repubblica) groups the news semantically, builds a co-occurrence graph of the key concepts, detects the day's thematic communities, and lets a large language model narrate the result in publication-ready Italian.
- 
-Technically, it is an end-to-end NLP and graph pipeline that turns the daily flow of Italian press into a single, structured intelligence report. The output is an editorial artifact: a daily wordcloud, a "last 24 hours in brief" recap, a set of highlighted articles, the main thematic communities, and a coverage-and-framing view across outlets. The whole process runs unattended in the cloud and republishes an updated HTML page - the public product, **La Parola Data** - three times a day.
- 
-The project is deliberately designed around two ideas that recur throughout: **distribution-aware logic** (thresholds derived from the current day's corpus rather than fixed constants, so the system stays robust when the news volume or thematic spread changes) and a **cloud-first execution model** (the report can be rendered fully in memory and published without touching disk, which is what makes scheduled execution on ephemeral runners reliable).
+## Added Value
+
+The added value of the project lies in the analytical layer built between raw news articles and the final generated report.
+
+Instead of asking a language model to summarise a set of articles directly, the system first organises the news corpus through data science techniques:
+
+- semantic clustering groups articles that refer to similar events or themes, even when they use different wording;
+- concept extraction identifies the most relevant terms emerging from each cluster;
+- graph analysis shows how concepts are connected across the daily coverage;
+- community detection identifies broader thematic areas;
+- structural role classification distinguishes central, bridge, stable, peripheral, and generic concepts;
+- representative article selection anchors the report to concrete source material.
+
+Only after this analytical structure has been created is the LLM used to generate the final narration.
+
+This design choice is central to the project. The LLM is not treated as an oracle and is not asked to define the structure of reality on its own. It is used as a narrative interface over a prior analytical process based on embeddings, clustering, graph metrics, source aggregation, and explicit rules.
+
+In this sense, the project explores a more responsible use of generative AI: one where automation supports interpretation, but does not hide the need for method, transparency, and critical judgement.
+
+The project is deliberately designed around two ideas that recur throughout the implementation: **distribution-aware logic** and a **cloud-first execution model**. Thresholds are derived from the current day's corpus rather than from fixed constants, so the system remains more robust when news volume or thematic spread changes. The report can also be rendered fully in memory and published without relying on persistent local storage, making scheduled execution on ephemeral cloud runners more reliable.
  
 ---
  
