@@ -294,4 +294,5 @@ Sensitive values (`MISTRAL_API_KEY`, the publishing token) are injected as GitHu
 **Alessio Repetto**
  
 GitHub: https://github.com/AlessioRepetto
+
 LinkedIn: https://www.linkedin.com/in/alessiorepetto/
