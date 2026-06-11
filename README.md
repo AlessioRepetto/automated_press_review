@@ -15,7 +15,7 @@ Every day, the various news sources publish hundreds of articles on overlapping 
 
 This project was created to explore whether data science and artificial intelligence can support a more reflective way of reading the news.
 
-The goal is not to replace journalism, nor to claim neutrality through automation. The project starts from the assumption that every representation of the news is naturally partial, and its purpose is to make this partiality easier to observe by analysing multiple sources together, identifying recurring themes, detecting connections between concepts, and reducing the dependence on the framing of any single outlet.
+The goal is not to replace journalism, nor to claim neutrality through automation. The project starts from the assumption that every representation of the news is naturally partial, and its purpose is to make this partiality easier to observe by analysing multiple sources together, identifying recurring themes, detecting connections between concepts, and reducing the dependence on the framing of any single news source.
 
 From this perspective, the project has both a technical and an ethical motivation: using automation not to accelerate passive consumption of information, but to support critical reading, comparison, and awareness.
 
@@ -27,11 +27,11 @@ The final output, **La Parola Data**, is an automatically generated press review
 
 **Automated Press Review** is an end-to-end NLP, graph analysis, and LLM pipeline that transforms the daily flow of Italian online news into a structured and automatically published press review.
 
-The system reads the public RSS feeds of ten national outlets - AGI, Adnkronos, ANSA, Corriere della Sera, Il Fatto Quotidiano, Il Giornale, Il Sole 24 Ore, Internazionale, Rai, and Repubblica - and processes them as a single daily corpus rather than as a set of isolated articles.
+The system reads the public RSS feeds of ten national news sources - AGI, Adnkronos, ANSA, Corriere della Sera, Il Fatto Quotidiano, Il Giornale, Il Sole 24 Ore, Internazionale, Rai, and Repubblica - and processes them as a single daily corpus rather than as a set of isolated articles.
 
 The pipeline cleans and deduplicates the collected articles, groups them semantically, extracts relevant concepts, builds a co-occurrence graph, detects the day's thematic communities, and uses a large language model to narrate the result in publication-ready Italian.
 
-The output is an editorial artifact: a daily wordcloud, a "last 24 hours in brief" recap, a set of highlighted articles, the main thematic communities, and a coverage-and-framing view across outlets. The whole process runs unattended in the cloud and republishes an updated HTML page - the public product, **La Parola Data** - three times a day.
+The output is an editorial artifact: a daily wordcloud, a "last 24 hours in brief" recap, a set of highlighted articles, the main thematic communities, and a coverage-and-framing view across news sources. The whole process runs unattended in the cloud and republishes an updated HTML page - the public product, **La Parola Data** - three times a day.
 
 The project is not designed as a simple RSS aggregator. Its purpose is to analyse the structure of the news cycle: which topics dominate the day, which concepts connect different stories, which articles are representative of broader themes, and how recurring patterns emerge across multiple sources.
  
@@ -63,7 +63,7 @@ The project is deliberately designed around two ideas that recur throughout the 
 ## Objectives
  
 - Surface, from a high-volume multi-source news stream, the information that genuinely matters
-- Retell it concisely and more impartially than any single outlet, by anchoring narration to what multiple sources actually report
+- Retell it concisely while reducing dependence on the framing of any single news source, by anchoring narration to recurring patterns across multiple sources
 - Ingest and normalise heterogeneous RSS feeds into a clean, deduplicated daily corpus
 - Cluster news semantically without a fixed number of topics, using density-based clustering
 - Extract interpretable key concepts per cluster and connect them in a co-occurrence graph
@@ -151,6 +151,7 @@ A reader of La Parola Data gets a compact, source-agnostic reading of the day:
 - **Highlighted articles** — the most representative pieces of the day
 - **Main thematic communities** — the day's macro-topics, each with an LLM-written title and its representative articles
 - **Coverage and framing** — how different outlets cover the same clusters, and with which words
+
 The development notebook goes further than the published page. Beyond the sections above, it includes **ego-graph views of individual concepts** and a **per-concept narration** that attributes a meaning and a structural role to a single word within the day's discourse. These exploratory analyses are intentionally left out of the public report to keep it focused and quick to read; they remain available in the notebook for deeper inspection.
  
 ---
